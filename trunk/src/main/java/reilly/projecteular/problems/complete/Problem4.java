@@ -1,4 +1,4 @@
-package reilly.projectular.problems;
+package reilly.projecteular.problems.complete;
 
 class Problem4 {
 	public static void main(String[] args) {
