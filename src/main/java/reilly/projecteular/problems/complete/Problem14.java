@@ -1,4 +1,4 @@
-package reilly.projectular.problems;
+package reilly.projecteular.problems.complete;
 
 import java.util.Map;
 import java.util.TreeMap;

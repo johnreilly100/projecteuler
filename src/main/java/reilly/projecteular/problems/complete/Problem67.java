@@ -1,4 +1,4 @@
-package reilly.projectular.problems;
+package reilly.projecteular.problems.complete;
 
 import java.util.*;
 import java.util.List;
@@ -10,11 +10,11 @@ import java.util.List;
  * Note: This problem is a more difficult version of problem 18
  *
  */
-public class Problem63 {
+public class Problem67 {
 
     public static void main(String[] arg) {
-        Problem18 problem18 = new Problem18();
-        problem18.maximumTotalFromTopToBottom();
+        Problem67 problem67 = new Problem67();
+        problem67.maximumTotalFromTopToBottom();
     }
 
     void maximumTotalFromTopToBottom() {

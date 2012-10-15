@@ -1,4 +1,4 @@
-package reilly.projectular.problems;
+package reilly.projecteular.problems.complete;
 
 import java.lang.Math;
 
