@@ -1,4 +1,4 @@
-package reilly.projecteular.problems.oldanddonotwork;
+package reilly.projecteuler.problems.oldanddonotwork;
 
 public class Problem7 {
 

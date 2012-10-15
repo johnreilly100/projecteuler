@@ -1,4 +1,4 @@
-package reilly.projecteular.utility;
+package reilly.projecteuler.utility;
 
 import java.util.ArrayList;
 import java.lang.Math;
