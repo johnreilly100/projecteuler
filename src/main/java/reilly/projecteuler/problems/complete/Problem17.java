@@ -1,4 +1,4 @@
-package reilly.projecteuler.problems.inprogress;
+package reilly.projecteuler.problems.complete;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,16 +33,21 @@ public class Problem17 {
              } else if(i > 100 && i <= 999) {
                 totalLetters += oneTwoTwenty(extractOutCertainDigitFromNumber(i,0));
                 totalLetters += HUNDRED;
-                totalLetters += AND;
                 int secondDigit = extractOutCertainDigitFromNumber(i,1);
+                int thirdDigit = extractOutCertainDigitFromNumber(i,2);
+
+                 // only add in the and when its not an even multiple of 100
+                if(secondDigit == 0 && thirdDigit == 0) {
+                    continue;
+                } else {
+                    totalLetters += AND;
+                }
                 if(secondDigit == 0) {
                     totalLetters += oneTwoTwenty(extractOutCertainDigitFromNumber(i,2));
                 } else {
-                    totalLetters += oneTwoNinetyNine((secondDigit * 10) + extractOutCertainDigitFromNumber(i,2));
-//                    totalLetters += TwentyoneTwoNinetynine(extractOutCertainDigitFromNumber(i,1));
-//                    totalLetters += oneTwoTwenty(extractOutCertainDigitFromNumber(i,2));
+                        totalLetters += oneTwoNinetyNine((secondDigit * 10) + thirdDigit);
                 }
-            } else if(x == 1000) {
+            } else if(i == 1000) {
                 totalLetters += oneTwoTwenty(1);
                 totalLetters += THOUSAND;
             }
@@ -55,8 +60,11 @@ public class Problem17 {
         if(x > 0 && x <= 20) {
             return oneTwoTwenty(x);
         } else if(x > 20 && x <= 99) {
-            total += oneTwoTwenty(extractOutCertainDigitFromNumber(x,1));
-            total += TwentyoneTwoNinetynine(extractOutCertainDigitFromNumber(x,0));
+            int temp = extractOutCertainDigitFromNumber(x,0);
+            total += TwentyoneTwoNinetynine(temp);
+
+            temp = extractOutCertainDigitFromNumber(x,1);
+            total += oneTwoTwenty(temp);
         }
         return total;
     }
@@ -75,20 +83,12 @@ public class Problem17 {
         return TWENTY_TWO_NINETY_IN_TENS[x];
     }
 
-    int OneHundredTwoNineHundredAndNinetynine(int x) {
-        if(x < 2 || x > 9) {
-            throw new IllegalArgumentException();
-        }
-        return TWENTY_TWO_NINETY_IN_TENS[x];
-    }
-
     int extractOutCertainDigitFromNumber(int numberToParse, int digitRequired) {
 //        if(numberToParse < digitRequired.) {
 //            throw new IllegalArgumentException();
 //        }
         String number = String.valueOf(numberToParse);
         int temp = Character.getNumericValue(number.charAt(digitRequired));
-//        System.out.println("Temp " + temp);
         return temp;
     }
 }
