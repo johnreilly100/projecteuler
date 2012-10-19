@@ -41,33 +41,26 @@ public class Problem19 {
     }
 
     private static boolean checkFor31DayMonth(int monthMod) {
-        if(monthMod == 1) {
-            return true;
-        } else if(monthMod == 3) {
-            return true;
-        } else if(monthMod == 5) {
-            return true;
-        } else if(monthMod == 7) {
-            return true;
-        } else if(monthMod == 8) {
-            return true;
-        } else if(monthMod == 10) {
-            return true;
-        } else if(monthMod == 0) {
-            return true;
+        switch (monthMod) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 0:
+                return true;
         }
         return false;
     }
 
     private static boolean checkFor30DayMonth(int monthMod) {
-        if(monthMod == 4) {
-            return true;
-        } else if(monthMod == 6) {
-            return true;
-        } else if(monthMod == 9) {
-            return true;
-        } else if(monthMod == 11) {
-            return true;
+        switch (monthMod) {
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                return true;
         }
         return false;
     }
