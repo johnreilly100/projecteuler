@@ -1,7 +1,6 @@
 package reilly.projecteuler.problems.inprogress;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: john
@@ -48,6 +47,23 @@ public class Problem215 {
 
 //        ArrayList<int []> rowConfigurations = problem215.calculateAllBlockLayoutsForOneRow(originRowHolder, 32);
         System.out.println("Time taken = " + ((System.currentTimeMillis() - startTime) / 1000));
+    }
+
+    int calculateNumberOfWaysOfFormingWall(ArrayList<int []> layoutsForOneRow, int numberOfRows) {
+        int total = 0;
+        for(int i = 0; i < numberOfRows; i++) {
+
+        }
+        return total;
+    }
+
+    boolean checkCanTwoRowsBeStackedOnTopOfEachOther(int[] row1, int[] row2) {
+        for(int i = 2; i < row1.length; i++) {
+            if(row1[i] == 1 && row2[i] == 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     void printArray(int[] array) {
