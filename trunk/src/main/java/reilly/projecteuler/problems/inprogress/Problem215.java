@@ -8,56 +8,62 @@ import java.util.ArrayList;
  * Time: 18:13
  */
 public class Problem215 {
+    
+    static int total = 0;
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Problem215 problem215 = new Problem215();
-        int[] testRow = new int[9];
+        problem215.runProgram();
+        System.out.println("Time taken = " + ((System.currentTimeMillis() - startTime) / 1000));
+    }
+
+    private void runProgram() {
+        int[] testRow = new int[32];
         System.out.println("testRow.length = " + testRow.length);
         for(int i = 0; i < testRow.length; i++) {
             testRow[i] = -1;
         }
-//        problem215.printArray(testRow);
-//        problem215.addThreeToRow(testRow, 9);
-//        problem215.printArray(testRow);
-//        problem215.addThreeToRow(testRow, 9);
-//        problem215.printArray(testRow);
-//        problem215.addThreeToRow(testRow, 9);
-//        problem215.printArray(testRow);
-//        problem215.addThreeToRow(testRow, 9);
-//        problem215.printArray(testRow);
-//        problem215.addThreeToRow(testRow, 9);
-//        problem215.printArray(testRow);
         ArrayList<int []> rowConfigurations = new ArrayList<int[]>();
-        problem215.calculateAllLayoutsForOneRow(testRow, 9, rowConfigurations);
+        calculateAllLayoutsForOneRow(testRow, 32, rowConfigurations);
         System.out.println("rowConfigurations size = " + rowConfigurations.size());
+        int x = 0;
         for(int[] row: rowConfigurations) {
-            problem215.printArray(row);
+            printArray(row);
+            x++;
+            if(x == 100) {
+                break;
+            }
         }
-
-        int[] originRow = new int[33];
-        for(int i = 0; i < 33; i++) {
-            originRow[i] = 0;
-        }
-        originRow[0] = 1;
-        originRow[32] = 1;
-
-        ArrayList<int []> originRowHolder = new ArrayList<int []>();
-        originRowHolder.add(originRow);
-
-//        ArrayList<int []> rowConfigurations = problem215.calculateAllBlockLayoutsForOneRow(originRowHolder, 32);
-        System.out.println("Time taken = " + ((System.currentTimeMillis() - startTime) / 1000));
+        calculateNumberOfWaysOfFormingWall(rowConfigurations, 7);
+        System.out.println("Total ways = " + total);
     }
 
-    int calculateNumberOfWaysOfFormingWall(ArrayList<int []> layoutsForOneRow, int numberOfRows) {
-        int total = 0;
-        for(int i = 0; i < numberOfRows; i++) {
-
+    private int calculateNumberOfWaysOfFormingWall(ArrayList<int []> layoutsForOneRow, int numberOfRows) {
+//        int total = 0;
+        for(int [] row: layoutsForOneRow) {
+//            System.out.println("First level row");
+            checkIfOtherRowsCanBeStacked(row, layoutsForOneRow, numberOfRows - 1 );
         }
         return total;
     }
 
-    boolean checkCanTwoRowsBeStackedOnTopOfEachOther(int[] row1, int[] row2) {
+    private void checkIfOtherRowsCanBeStacked(int [] previousRow, ArrayList<int []> layoutsForOneRow, int numberOfRows) {
+//        System.out.println("numberOfRows = " + numberOfRows);
+        for(int [] row: layoutsForOneRow) {
+            boolean result = checkCanTwoRowsBeStackedOnTopOfEachOther(previousRow, row);
+            if(result) {
+                if(numberOfRows == 1) {
+//                    System.out.println("Complete row");
+                    total++;
+                } else {
+                    checkIfOtherRowsCanBeStacked(row, layoutsForOneRow, --numberOfRows);
+                }
+            }
+        }
+    }
+
+    private boolean checkCanTwoRowsBeStackedOnTopOfEachOther(int[] row1, int[] row2) {
         for(int i = 2; i < row1.length; i++) {
             if(row1[i] == 1 && row2[i] == 1) {
                 return false;
@@ -66,7 +72,7 @@ public class Problem215 {
         return true;
     }
 
-    void printArray(int[] array) {
+    private void printArray(int[] array) {
         for(int i = 0; i < array.length; i++) {
             if(i == array.length -1) {
                 System.out.println(array[i]);
@@ -76,28 +82,13 @@ public class Problem215 {
         }
     }
     
-    int[] copyArray(int[] source) {
+    private int[] copyArray(int[] source) {
         int[] destination = new int[source.length];
         System.arraycopy(source, 0, destination,0 , source.length);
         return destination;
     }
 
-//    ArrayList<int []> calculateAllBlockLayoutsForOneRow(ArrayList<int []> rowConfiguration, int rowSize) {
-//
-//
-//
-//        for(int[] row: rowConfiguration) {
-//            if(row.length == rowSize)
-//            // add a block of two
-//
-//            // add a block of three
-//        }
-//        List<Integer> rowLayout = new ArrayList<Integer>();
-//
-//        return rowConfigurations;
-//    }
-//
-    void calculateAllLayoutsForOneRow(int[] row, int rowLength, ArrayList<int []> rowConfigurations) {
+    private void calculateAllLayoutsForOneRow(int[] row, int rowLength, ArrayList<int []> rowConfigurations) {
         int[] firstCopy = copyArray(row);
         if(addTwoToRow(firstCopy, rowLength)) {
             if(checkIfRowIsFull(firstCopy, rowLength)) {
@@ -116,7 +107,7 @@ public class Problem215 {
         }
     }
 
-    boolean checkIfRowIsFull(int[] row, int rowLength) {
+    private boolean checkIfRowIsFull(int[] row, int rowLength) {
         if(row[rowLength - 1] != -1) {
             return true;
         } else {
@@ -124,7 +115,7 @@ public class Problem215 {
         }
     }
 
-    boolean addTwoToRow(int[] row, int rowLength) {
+    private boolean addTwoToRow(int[] row, int rowLength) {
         int nextFreeIndex = calculateNexFreeIndex(row);
         if(rowLength - nextFreeIndex < 2) {
             return false;
@@ -135,7 +126,7 @@ public class Problem215 {
         }
     }
 
-    boolean addThreeToRow(int[] row, int rowLength) {
+    private boolean addThreeToRow(int[] row, int rowLength) {
         int nextFreeIndex = calculateNexFreeIndex(row);
         if(rowLength - nextFreeIndex < 3) {
             return false;
@@ -147,7 +138,7 @@ public class Problem215 {
         }
     }
     
-    int calculateNexFreeIndex(int[] row) {
+    private int calculateNexFreeIndex(int[] row) {
         for(int i = 0; i < row.length; i++) {
             if(row[i] == -1) {
                 return i;
