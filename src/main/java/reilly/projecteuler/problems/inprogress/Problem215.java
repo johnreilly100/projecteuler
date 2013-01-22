@@ -19,13 +19,15 @@ public class Problem215 {
     }
 
     private void runProgram() {
-        int[] testRow = new int[32];
+        int widthOfWall = 9;
+        int heightOfWall = 3;
+        int[] testRow = new int[widthOfWall];
         System.out.println("testRow.length = " + testRow.length);
         for(int i = 0; i < testRow.length; i++) {
             testRow[i] = -1;
         }
         ArrayList<int []> rowConfigurations = new ArrayList<int[]>();
-        calculateAllLayoutsForOneRow(testRow, 32, rowConfigurations);
+        calculateAllLayoutsForOneRow(testRow, widthOfWall, rowConfigurations);
         System.out.println("rowConfigurations size = " + rowConfigurations.size());
         int x = 0;
         for(int[] row: rowConfigurations) {
@@ -35,7 +37,7 @@ public class Problem215 {
                 break;
             }
         }
-        calculateNumberOfWaysOfFormingWall(rowConfigurations, 7);
+        calculateNumberOfWaysOfFormingWall(rowConfigurations, heightOfWall);
         System.out.println("Total ways = " + total);
     }
 
@@ -43,7 +45,7 @@ public class Problem215 {
 //        int total = 0;
         for(int [] row: layoutsForOneRow) {
 //            System.out.println("First level row");
-            checkIfOtherRowsCanBeStacked(row, layoutsForOneRow, numberOfRows - 1 );
+            checkIfOtherRowsCanBeStacked(row, layoutsForOneRow, numberOfRows - 1);
         }
         return total;
     }
@@ -54,9 +56,13 @@ public class Problem215 {
             boolean result = checkCanTwoRowsBeStackedOnTopOfEachOther(previousRow, row);
             if(result) {
                 if(numberOfRows == 1) {
-//                    System.out.println("Complete row");
+                    System.out.println("Complete row");
+//                    printArray(previousRow);
+//                    printArray(row);
+//                    System.out.println("");
                     total++;
                 } else {
+                    System.out.println("not at top yet numberOfRows = " + numberOfRows);
                     checkIfOtherRowsCanBeStacked(row, layoutsForOneRow, --numberOfRows);
                 }
             }
