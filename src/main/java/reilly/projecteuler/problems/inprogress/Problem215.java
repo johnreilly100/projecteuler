@@ -94,21 +94,27 @@ public class Problem215 {
         return destination;
     }
 
-    private void calculateAllLayoutsForOneRow(int[] row, int rowLength, ArrayList<int []> rowConfigurations) {
+    /**
+     *
+     * @param row the row in question
+     * @param widthOfWall width of the row of bricks
+     * @param rowConfigurations
+     */
+    private void calculateAllLayoutsForOneRow(int[] row, int widthOfWall, ArrayList<int []> rowConfigurations) {
         int[] firstCopy = copyArray(row);
-        if(addTwoToRow(firstCopy, rowLength)) {
-            if(checkIfRowIsFull(firstCopy, rowLength)) {
+        if(addTwoToRow(firstCopy, widthOfWall)) {
+            if(checkIfRowIsFull(firstCopy, widthOfWall)) {
                 rowConfigurations.add(firstCopy);    
             } else {
-                calculateAllLayoutsForOneRow(firstCopy, rowLength, rowConfigurations);
+                calculateAllLayoutsForOneRow(firstCopy, widthOfWall, rowConfigurations);
             }
         }
         int[] secondCopy = copyArray(row);
-        if(addThreeToRow(secondCopy, rowLength)) {
-            if(checkIfRowIsFull(secondCopy, rowLength)) {
+        if(addThreeToRow(secondCopy, widthOfWall)) {
+            if(checkIfRowIsFull(secondCopy, widthOfWall)) {
                 rowConfigurations.add(secondCopy);
             } else {
-                calculateAllLayoutsForOneRow(secondCopy, rowLength, rowConfigurations);
+                calculateAllLayoutsForOneRow(secondCopy, widthOfWall, rowConfigurations);
             }
         }
     }
@@ -121,9 +127,27 @@ public class Problem215 {
         }
     }
 
-    private boolean addTwoToRow(int[] row, int rowLength) {
+    /**
+     * Checks if the int[] row has space to add a block two wide.
+     * If it can, it adds a block of two to the row and returns true.
+     * If it cant it returns false and does not modify the row
+     *
+     * When adding blocks the following is the procedure
+     * it adds the left hand wall with a 1 then adds a zero for the middle of the block
+     * the right hand wall will still be -1 as this will be changed when the next block is added
+     * Example
+     * [-1,-1,-1,-1,-1,-1,-1,-1.....]
+     * After one 2x1 block is inserted it looks like
+     * [1,0,-1,-1,-1,-1,-1,-1.....]
+     *
+     *
+     * @param row
+     * @param rowWidth
+     * @return
+     */
+    boolean addTwoToRow(int[] row, int rowWidth) {
         int nextFreeIndex = calculateNexFreeIndex(row);
-        if(rowLength - nextFreeIndex < 2) {
+        if(rowWidth - nextFreeIndex < 2) {
             return false;
         } else {
             row[nextFreeIndex] = 1;
@@ -132,7 +156,7 @@ public class Problem215 {
         }
     }
 
-    private boolean addThreeToRow(int[] row, int rowLength) {
+    boolean addThreeToRow(int[] row, int rowLength) {
         int nextFreeIndex = calculateNexFreeIndex(row);
         if(rowLength - nextFreeIndex < 3) {
             return false;
@@ -144,7 +168,7 @@ public class Problem215 {
         }
     }
     
-    private int calculateNexFreeIndex(int[] row) {
+    int calculateNexFreeIndex(int[] row) {
         for(int i = 0; i < row.length; i++) {
             if(row[i] == -1) {
                 return i;
