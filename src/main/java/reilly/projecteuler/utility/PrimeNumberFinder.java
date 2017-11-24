@@ -1,7 +1,7 @@
 package reilly.projecteuler.utility;
 
 import java.util.ArrayList;
-import java.lang.Math;
+import java.util.List;
 
 public class PrimeNumberFinder {
 
@@ -14,7 +14,10 @@ public class PrimeNumberFinder {
 
         startTime = System.currentTimeMillis();
 
-        primeNumUpto(1);
+//        primeNumUpto(1);
+        List<Long> list = getPrimeFactors(600851475143L);
+        System.out.println("list size = " + list.size());
+        System.out.println("list size = " + list.get(list.size() - 1));
         System.exit(0);
 
 
@@ -69,7 +72,7 @@ public class PrimeNumberFinder {
         long startTime2 = System.currentTimeMillis();
 
         test:
-        for(int x = 5; x < 1000000000; x = x + 2) {
+        for(int x = 5; x < 100; x = x + 2) {
             for (Integer y : primeList) {
                 if (x % y == 0) {
                     continue test;
@@ -88,5 +91,45 @@ public class PrimeNumberFinder {
         }
         long endTime2 = System.currentTimeMillis();
         System.out.print("Total time = " + (endTime2 - startTime2));
+    }
+
+    public static List<Long> getPrimeFactors(long i) {
+        ArrayList<Long> primeList = new ArrayList<Long>();
+        primeList.add((long) 2);
+        primeList.add((long) 3);
+//        int counter = 0;
+
+        long startTime2 = System.currentTimeMillis();
+
+        test:
+        for(long x = 5; x < Math.sqrt(i); x = x + 2) {
+            for (Long y : primeList) {
+                if (x % y == 0) {
+                    continue test;
+                }
+                if (y.intValue() >= Math.sqrt(x)) {
+                    //  System.out.println("x = " + x + "y = " + y + " Math.sqrt(x) = " + Math.sqrt(x));
+                    break;
+                }
+            }
+            System.out.println(x);
+            primeList.add(x);
+//            System.out.print(x + "\t" + primeList.size() + "\t" + ((System.currentTimeMillis() - startTime) / 1000) + "\t" + Integer.toString(x).length() + "\t");
+//            counter++;
+//            if (counter % 5 == 0){
+//                System.out.println("");
+//            }
+        }
+        long endTime2 = System.currentTimeMillis();
+        System.out.print("Total time = " + (endTime2 - startTime2));
+
+        ArrayList<Long> primeFactors = new ArrayList<Long>();
+        for(long prime: primeList) {
+            if (i % prime == 0) {
+                primeFactors.add(prime);
+            }
+        }
+
+        return primeFactors;
     }
 }
